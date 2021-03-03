@@ -1,0 +1,58 @@
+<!DOCTYPE html>
+<head>
+    <title>Contact List App</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css" integrity="sha384-ggOyR0iXCbMQv3Xipma34MD+dH/1fQ784/j6cY/iJTQUOhcWr7x9JvoRxT2MZw1T" crossorigin="anonymous">
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.4.0/font/bootstrap-icons.css">
+    <link rel="stylesheet" href="style.css" />
+    <script src="https://ajax.googleapis.com/ajax/libs/angularjs/1.8.2/angular.min.js"></script>
+</head>
+<body ng-app="contactList" ng-controller="myCtrl">
+    <div class="container">
+        <div class="panel panel-info">
+            <div class="panel-heading">           
+                <div class="panel-title">
+                    <h3 class="text-center">Contact List</h3>              
+                </div>      
+            </div>
+            <div class="panel-body">
+              <div class="table-responsive">
+                <table class="table table-striped">
+                  <thead>
+                    <tr>
+                        <th>Contacts</th>
+                        <th>Phone Number</th>
+                        <th>Created | Modified</th>
+                        <th>Configure</th>
+                    </tr>
+                   </thead>
+                   <tbody>
+                    <tr ng-repeat="person in info track by $index">
+                        <td><span ng-hide="showMe($index)">{{person.name}}</span><input text="text"class="form-control input-sm" ng-model="person.name" ng-show="showMe($index)"></td>
+                        <td><span ng-hide="showMe($index)">{{person.tel}}</span><input text="text" class="form-control input-sm" ng-model="person.tel" ng-show="showMe($index)"></td>
+                        <td><span>{{ person.created | date: 'dd-MM-yyyy hh:mm' }} | {{ person.lastModified | date: 'dd-MM-yyyy hh:mm' }}</span></td>
+                        <td><a href="#" ng-click="removeContact()"><i class="bi bi-trash"></i>&nbsp;</a>/<a href="#" ng-click="change()" ng-hide="showMe($index)"> <i class="bi bi-pencil-square"></i></a><a href="#" ng-click="save()" ng-show="showMe($index)">&nbsp;<i class="bi bi-journal-check"></i></a></td>
+                    </tr>
+                  </tbody>
+                </table>
+              </div>
+            </div>
+            <div class="panel-footer">
+                <form class="form-inline">
+                    <div class="form-group mr-2">
+                        <span>Name：</span>
+                        <input type="text" class="form-control" ng-model="newName" >
+                    </div>
+                    <div class="form-group mr-2">
+                        <span>Tel：</span>
+                        <input type="text" class="form-control" ng-model="newTel" >
+                    </div> 
+                    <input type="button" class="btn btn-primary btn-sm px-3" value="Add" ng-click="addItem()">       
+                </form>            
+            </div>
+            <p class="import-note p-3">Import contact(s) from CSV file! (Structure must be: Name | Number )</p><input id="csv-upload" type="file" value="Upload" file-reader="fileContent"/>
+        </div>   
+    </div>
+    <script src="script.js"></script>
+</body>
+</html>
